@@ -40,31 +40,19 @@ public class MainPageTest {
         closeCookieBannerReliably();
     }
 
-    /**
-     * Versão FIÁVEL de fechar o banner,
-     * porque o banner pode aparecer com atraso.
-     */
     private void closeCookieBannerReliably() {
         SelenideElement container = $(".ch2-container");
 
-        // Primeiro espera até 5s pelo banner aparecer (se existir)
         try {
             container.should(appear, Duration.ofSeconds(5));
         } catch (AssertionError ignored) {
-            // O banner não apareceu — segue o teste normal
             return;
         }
 
-        // Se apareceu, tenta clicar no botão
         SelenideElement button = container.$("button");
-        if (button.exists()) {
-            button.shouldBe(visible, Duration.ofSeconds(5)).click();
-        }
+        button.shouldBe(visible, Duration.ofSeconds(5)).click();
     }
 
-    /**
-     * Encontra o input de pesquisa, usando vários seletores possíveis.
-     */
     private SelenideElement findSearchInput() {
         String[] selectors = {
                 "[data-test='search-input']",
@@ -77,7 +65,7 @@ public class MainPageTest {
 
         for (String s : selectors) {
             SelenideElement el = $(s);
-            if (el.exists()) return el;
+            if (el.isDisplayed()) return el;
         }
 
         throw new IllegalStateException(
@@ -89,7 +77,6 @@ public class MainPageTest {
     public void search() {
         mainPage.searchButton.shouldBe(visible).click();
 
-        // encontra input
         SelenideElement searchInput = findSearchInput().shouldBe(visible);
 
         String term = "Selenium";
@@ -100,7 +87,6 @@ public class MainPageTest {
                 .shouldBe(visible)
                 .click();
 
-        // página de pesquisa completa => URL contém "s=full"
         String url = WebDriverRunner.url();
         assertTrue(
                 url.contains("s=full"),
@@ -112,7 +98,6 @@ public class MainPageTest {
     public void toolsMenu() {
         mainPage.toolsMenu.shouldBe(visible).click();
 
-        // procura QUALQUER submenu visível
         $$("div[data-test='main-submenu']")
                 .findBy(visible)
                 .shouldBe(visible);
@@ -120,17 +105,13 @@ public class MainPageTest {
 
     @Test
     public void navigationToAllTools() {
-
-        // 1 — clica no botão "See Developer Tools"
         mainPage.seeDeveloperToolsButton.shouldBe(visible).click();
 
-        // 2 — dentro do painel, clicar no link mais seguro: suggestion-link com aria-label
         $$("a[data-test='suggestion-link']")
                 .findBy(attribute("aria-label", "Find your tool"))
                 .shouldBe(visible)
                 .click();
 
-        // 3 — verificar página dos produtos
         $("#products-page").shouldBe(visible);
 
         assertEquals(
