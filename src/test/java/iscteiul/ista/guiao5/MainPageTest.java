@@ -1,50 +1,155 @@
 package iscteiul.ista.guiao5;
+
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import static com.codeborne.selenide.Condition.attribute;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
-
 public class MainPageTest {
-    MainPage mainPage = new MainPage();
 
-@BeforeAll    public static void setUpAll() {
+    private final MainPage mainPage = new MainPage();
+
+    @BeforeAll
+    public static void globalSetup() {
+        Configuration.browser = "chrome";
         Configuration.browserSize = "1280x800";
+        Configuration.timeout = 10000; //em ms
+        Configuration.pageLoadTimeout = 40000; //em ms
+
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
-@BeforeEach    public void setUp() {
+    @BeforeEach
+    public void loadMainPage() {
         open("https://www.jetbrains.com/");
+        CookieHelper.closeCookiesIfVisible();
     }
 
+    /**
+     * ---------- TESTE 1: Pesquisa ----------
+     */
     @Test
     public void search() {
-        mainPage.searchButton.click();
+        // Acessa a barra de busca
+        mainPage.searchButton
+                .shouldBe(visible)
+                .click();
 
-        $("[data-test='search-input']").sendKeys("Selenium");
-        $("button[data-test='full-search-button']").click();
+        // Preenche o termo de pesquisa
+        final String term = "Selenium";
+        SelenideElement input = SearchHelper.locateSearchInput()
+                .shouldBe(visible);
+        input.setValue(term)
+                .shouldHave(attribute("value", term));
 
-        $("input[data-test='search-input']").shouldHave(attribute("value", "Selenium"));
+        // Dispara a busca avançada
+        $("button[data-test='full-search-button']")
+                .shouldBe(visible)
+                .click();
+
+        // Valida que a navegação ocorreu conforme esperado
+        String currentUrl = WebDriverRunner.url();
+        assertTrue(
+                currentUrl.contains("s=full"),
+                String.format("Esperava que a URL contivesse 's=full', mas foi: %s", currentUrl)
+        );
     }
 
+
+    /**
+     * ---------- TESTE 2: Menu Tools ----------
+     */
     @Test
     public void toolsMenu() {
-        mainPage.toolsMenu.click();
+        // Abre o menu Tools
+        mainPage.toolsMenu
+                .shouldBe(visible)
+                .click();
 
-        $("div[data-test='main-submenu']").shouldBe(visible);
+        // Obtém o primeiro submenu visível
+        SelenideElement submenu = $$("div[data-test='main-submenu']")
+                .filterBy(visible)
+                .first();
+
+        // Verifica se o submenu está visível
+        submenu.shouldBe(visible);
     }
 
+
+    /**
+     * ---------- TESTE 3: Navegar para All Tools ----------
+     */
     @Test
     public void navigationToAllTools() {
-        mainPage.seeDeveloperToolsButton.click();
-        mainPage.findYourToolsButton.click();
+        // Abre o menu de ferramentas do desenvolvedor
+        mainPage.seeDeveloperToolsButton
+                .shouldBe(visible)
+                .click();
 
-        $("#products-page").shouldBe(visible);
+        // Seleciona o link para "Find your tool"
+        SelenideElement findYourToolLink = $$("a[data-test='suggestion-link']")
+                .filterBy(attribute("aria-label", "Find your tool"))
+                .first();
 
-assertEquals("All Developer Tools and Products by JetBrains", Selenide.title());    }
+        findYourToolLink
+                .shouldBe(visible)
+                .click();
+
+        // Verifica se a página de produtos abriu
+        SelenideElement productsPage = $("#products-page");
+        productsPage.shouldBe(visible);
+
+        // Valida o título da página
+        String expectedTitle = "All Developer Tools and Products by JetBrains";
+        assertEquals(expectedTitle, title());
+    }
+
+
+
+    /**
+     * ---------- HELPERS ----------
+     */
+
+    /** Helper para o banner de cookies */
+    static class CookieHelper {
+        static void closeCookiesIfVisible() {
+            SelenideElement container = $(".ch2-container");
+
+            if (container.exists() && container.is(visible)) {
+                container.$("button").click();
+            }
+        }
+    }
+
+    /** Helper para localizar o campo de pesquisa */
+    static class SearchHelper {
+
+        private static final String[] POSSIBLE_SELECTORS = {
+                "[data-test='search-input']",
+                "[data-test='site-header-search-input']",
+                "#header-search",
+                "input[type='search']",
+                "input[placeholder*='Search']",
+                "input[placeholder*='search']"
+        };
+
+        static SelenideElement locateSearchInput() {
+            for (String selector : POSSIBLE_SELECTORS) {
+                SelenideElement el = $(selector);
+                if (el.exists()) return el;
+            }
+
+            throw new IllegalStateException(
+                    "O campo de pesquisa não foi encontrado. Inspeciona a página e ajusta os seletores."
+            );
+        }
+    }
 }
