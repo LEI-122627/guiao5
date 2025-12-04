@@ -1,6 +1,7 @@
 package iscteiul.ista.guiao5;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
@@ -25,6 +26,9 @@ public class MainPageTest {
         Configuration.pageLoadTimeout = 40000; //em ms
 
         SelenideLogger.addListener("allure", new AllureSelenide());
+
+        // Opcional:
+        // Configuration.holdBrowserOpen = true;
     }
 
     @BeforeEach
