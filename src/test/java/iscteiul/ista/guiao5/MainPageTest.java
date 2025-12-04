@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -126,6 +128,14 @@ public class MainPageTest {
     static class CookieHelper {
         static void closeCookiesIfVisible() {
             SelenideElement container = $(".ch2-container");
+
+            // Espera até 1 segundo pelo cookie aparecer
+            // Tenta esperar 1s sem quebrar o teste
+            try {
+                container.should(appear, Duration.ofSeconds(1));
+            } catch (Exception ignored) {
+                return; // Não apareceu → segue o teste
+            }
 
             if (container.exists() && container.is(visible)) {
                 container.$("button").click();
