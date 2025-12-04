@@ -1,6 +1,7 @@
 package iscteiul.ista.guiao5;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
@@ -73,6 +74,8 @@ public class MainPageTest {
         );
     }
 
+    // ---------------- tests ----------------
+
     @Test
     public void search() {
         mainPage.searchButton.shouldBe(visible).click();
@@ -112,7 +115,8 @@ public class MainPageTest {
                 .shouldBe(visible)
                 .click();
 
-        $("#products-page").shouldBe(visible);
+        // espera a página de produtos
+        $("#products-page, #products, .products-list").shouldBe(visible, Duration.ofSeconds(8));
 
         assertEquals(
                 "All Developer Tools and Products by JetBrains",
