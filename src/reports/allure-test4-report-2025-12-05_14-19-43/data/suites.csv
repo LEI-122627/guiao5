@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","14561","testSuccessfulJoinCommunityNotification()","","2025-12-05","failed","2025-12-05","","test4_form.FormTest","test4_form.FormTest","testSuccessfulJoinCommunityNotification"
+"","3779","preencherESubmeterForm()","","2025-12-05","passed","2025-12-05","","test4_form.FormTest","test4_form.FormTest","preencherESubmeterForm"
+"","13708","shouldSubmitWhenMarketingEnabled()","","2025-12-05","failed","2025-12-05","","test4_form.FormTest","test4_form.FormTest","shouldSubmitWhenMarketingEnabled"
+"","5354","testSuccessfulJoinCommunityWithEmail()","","2025-12-05","passed","2025-12-05","","test4_form.FormTest","test4_form.FormTest","testSuccessfulJoinCommunityWithEmail"
+"","3937","preencherForm_clickCheckboxDepoisEmail_e_submeter()","","2025-12-05","passed","2025-12-05","","test4_form.FormTest","test4_form.FormTest","preencherForm_clickCheckboxDepoisEmail_e_submeter"
+"","13326","preencherForm_marcarCheckboxDepoisEscreverEmail_e_submeter()","","2025-12-05","failed","2025-12-05","","test4_form.FormTest","test4_form.FormTest","preencherForm_marcarCheckboxDepoisEscreverEmail_e_submeter"
