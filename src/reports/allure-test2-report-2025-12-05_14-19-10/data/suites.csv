@@ -1,0 +1,6 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","16588","addCategoryFlow()","","2025-12-05","passed","2025-12-05","","adicionarCategoria.tests.AddCategoryTest","adicionarCategoria.tests.AddCategoryTest","addCategoryFlow"
+"","18672","addCategoryShouldAppearInList()","","2025-12-04","failed","2025-12-04","","adicionarCategoria.tests.AddCategoryTest","adicionarCategoria.tests.AddCategoryTest","addCategoryShouldAppearInList"
+"","18552","addCategory()","","2025-12-05","failed","2025-12-05","","adicionarCategoria.tests.AddCategoryTest","adicionarCategoria.tests.AddCategoryTest","addCategory"
+"","15677","addCategoryShouldAppearInList_afterLoginAndAdmin()","","2025-12-05","failed","2025-12-05","","adicionarCategoria.tests.AddCategoryTest","adicionarCategoria.tests.AddCategoryTest","addCategoryShouldAppearInList_afterLoginAndAdmin"
+"","4857","uploadFileSuccessfully()","","2025-12-04","passed","2025-12-04","","database.tests.FileUploadPageTest","database.tests.FileUploadPageTest","uploadFileSuccessfully"
