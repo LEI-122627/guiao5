@@ -1,0 +1,8 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","1605","testPaginaCarregaComFilmes()","","2025-12-05","passed","2025-12-05","","test3_database.MovieInformationTest","test3_database.MovieInformationTest","testPaginaCarregaComFilmes"
+"","1684","testLimparFiltros()","","2025-12-05","passed","2025-12-05","","test3_database.MovieInformationTest","test3_database.MovieInformationTest","testLimparFiltros"
+"","8399","testAbrirImdb()","","2025-12-05","failed","2025-12-05","","test3_database.MovieInformationTest","test3_database.MovieInformationTest","testAbrirImdb"
+"","2311","testAbrirPagina()","","2025-12-05","passed","2025-12-05","","test3_database.MovieInformationTest","test3_database.MovieInformationTest","testAbrirPagina"
+"","293","testSelecionarFilme()","","2025-12-05","passed","2025-12-05","","test3_database.MovieInformationTest","test3_database.MovieInformationTest","testSelecionarFilme"
+"","1693","testFiltrarPorTitulo()","","2025-12-05","passed","2025-12-05","","test3_database.MovieInformationTest","test3_database.MovieInformationTest","testFiltrarPorTitulo"
+"","3338","testClickImbdLink()","","2025-12-05","passed","2025-12-05","","test3_database.MovieInformationTest","test3_database.MovieInformationTest","testClickImbdLink"
